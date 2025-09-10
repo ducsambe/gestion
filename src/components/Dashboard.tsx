@@ -8,7 +8,7 @@ import DocumentRouting from './secretary/DocumentRouting';
 import DocumentTracking from './secretary/DocumentTracking';
 import MyDocuments from './secretary/MyDocuments';
 import LandCadastralDashboard from './dashboards/LandCadastralDashboard';
-import FinancinDashboard from './dashboards/FinancingDashboard';
+import FinancingDashboard from './dashboards/FinancingDashboard';
 import SalesManagementDashboard from './dashboards/SalesManagementDashboard';
 
 interface DashboardProps {
