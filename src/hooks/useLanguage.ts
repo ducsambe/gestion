@@ -3,7 +3,7 @@ import { Language } from '../types';
 import { TRANSLATIONS } from '../constants';
 
 export const useLanguage = () => {
-  const [language, setLanguage] = useState<Language>('fr');
+  const [language, setLanguage] = useState<Language>('fr'); // Default to French
 
   const t = (key: string) => {
     const keys = key.split('.');

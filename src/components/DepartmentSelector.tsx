@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, CreditCard, Building, ArrowRight } from 'lucide-react';
+import { MapPin, CreditCard, Globe , Building, ArrowRight } from 'lucide-react';
 import { Department } from '../types';
 
 interface DepartmentSelectorProps {
@@ -23,6 +23,38 @@ const DepartmentSelector: React.FC<DepartmentSelectorProps> = ({
 }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-orange-800 flex items-center justify-center p-6">
+      {/* Language Switcher - Top Right */}
+      <div className="absolute top-6 right-6 z-20">
+        <div className="flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/30 shadow-lg">
+          <Globe className="w-5 h-5 text-white animate-pulse" />
+          <div className="flex rounded-xl overflow-hidden border border-white/40 bg-white/10">
+            <button
+              onClick={() => {/* Add language change handler */}}
+              className={`px-4 py-2 text-sm font-bold transition-all duration-300 ${
+                language === 'fr' 
+                  ? 'bg-white text-blue-900 shadow-md' 
+                  : 'text-white hover:bg-white/20'
+              }`}
+            >
+              🇫🇷 FR
+            </button>
+            <button
+              onClick={() => {/* Add language change handler */}}
+              className={`px-4 py-2 text-sm font-bold transition-all duration-300 ${
+                language === 'en' 
+                  ? 'bg-white text-blue-900 shadow-md' 
+                  : 'text-white hover:bg-white/20'
+              }`}
+            >
+              🇬🇧 EN
+            </button>
+          </div>
+          <div className="text-xs text-white/80 font-medium">
+            {language === 'en' ? 'Language' : 'Langue'}
+          </div>
+        </div>
+      </div>
+      
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 bg-white bg-opacity-5 rounded-full animate-pulse"></div>
@@ -39,8 +71,12 @@ const DepartmentSelector: React.FC<DepartmentSelectorProps> = ({
             </div>
           </div>
           <h1 className="text-5xl font-bold text-white mb-4">GeoCasa Group</h1>
-          <p className="text-blue-100 text-xl mb-2">{t('selectDepartment')}</p>
-          <p className="text-blue-200 text-lg">Choisissez votre département de travail</p>
+          <p className="text-blue-100 text-xl mb-2">
+            {language === 'en' ? 'Select Department' : 'Sélectionner le département'}
+          </p>
+          <p className="text-blue-200 text-lg">
+            {language === 'en' ? 'Choose your work department' : 'Choisissez votre département de travail'}
+          </p>
         </div>
 
         {/* Department Cards */}
@@ -73,7 +109,9 @@ const DepartmentSelector: React.FC<DepartmentSelectorProps> = ({
                       
                       {/* Access Button */}
                       <div className="flex items-center justify-center space-x-2 text-blue-200 group-hover:text-white transition-colors duration-300">
-                        <span className="text-sm font-semibold">Accéder au département</span>
+                        <span className="text-sm font-semibold">
+                          {language === 'en' ? 'Access Department' : 'Accéder au département'}
+                        </span>
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                       </div>
                     </div>
@@ -86,9 +124,16 @@ const DepartmentSelector: React.FC<DepartmentSelectorProps> = ({
 
         {/* Footer Information */}
         <div className="text-center mt-12 text-blue-100 text-sm space-y-2">
-          <p className="font-medium">Yaoundé, Cameroun</p>
-          <p>Heures d'ouverture: 08:00 - 18:00</p>
+          <p className="font-medium">
+            {language === 'en' ? 'Yaoundé, Cameroon' : 'Yaoundé, Cameroun'}
+          </p>
+          <p>
+            {language === 'en' ? 'Business Hours: 08:00 - 18:00' : 'Heures d\'ouverture: 08:00 - 18:00'}
+          </p>
           <p>+237 6XX XXX XXX • contact@gocasagroup.com</p>
+          <p className="text-xs">
+            {language === 'en' ? '24/7 Customer Support' : 'Support Client 24/7'}
+          </p>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, Bell, Search } from 'lucide-react';
 import { User as UserType, Department, DocumentFlow } from '../types';
 import Header from './Header';
 import LandCadastralDashboard from './dashboards/LandCadastralDashboard';
@@ -22,8 +22,8 @@ const Dashboard: React.FC<DashboardProps> = ({
   language 
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [deviceInfo, setDeviceInfo] = useState('Desktop');
   const [activeTab, setActiveTab] = useState('overview');
+  const [notifications] = useState(3); // Mock notification count
 
   // Mock document flow data
   const [documentFlows] = useState<DocumentFlow[]>([
@@ -59,20 +59,6 @@ const Dashboard: React.FC<DashboardProps> = ({
     }
   ]);
 
-  useEffect(() => {
-    // Detect device type
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const isTablet = /iPad|Android/i.test(navigator.userAgent) && window.innerWidth >= 768;
-    
-    if (isMobile && !isTablet) {
-      setDeviceInfo('Mobile');
-    } else if (isTablet) {
-      setDeviceInfo('Tablet');
-    } else {
-      setDeviceInfo('Desktop');
-    }
-  }, []);
-
   const renderDepartmentDashboard = () => {
     switch (department.id) {
       case 'land-cadastral':
@@ -90,16 +76,51 @@ const Dashboard: React.FC<DashboardProps> = ({
     <div className="min-h-screen bg-gray-50">
       <Header user={user} onLogout={onLogout} t={t} />
       
-      <div className="flex">
+      {/* Quick Actions Bar */}
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-4">
+              <h2 className="text-lg font-semibold text-gray-900">
+                Tableau de bord - {department.nameFr}
+              </h2>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              {/* Search Bar */}
+              <div className="hidden md:flex items-center space-x-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-200">
+                <Search className="w-4 h-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Rechercher..."
+                  className="bg-transparent border-none outline-none text-sm text-gray-700 placeholder-gray-400 w-48"
+                />
+              </div>
+              
+              {/* Notifications */}
+              <button className="relative p-2 text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                <Bell className="w-5 h-5" />
+                {notifications > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                    {notifications}
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="flex min-h-screen">
         {/* Main Content */}
-        <main className="flex-1 p-6 max-w-7xl mx-auto">
+        <main className="flex-1 p-4 sm:p-6 max-w-7xl mx-auto">
           {renderDepartmentDashboard()}
         </main>
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="lg:hidden fixed bottom-6 right-6 z-50 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-colors duration-200"
+          className="md:hidden fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
         >
           <Menu className="w-6 h-6" />
         </button>
@@ -107,7 +128,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         {/* Mobile sidebar overlay */}
         {sidebarOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}

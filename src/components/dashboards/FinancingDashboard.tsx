@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   CreditCard, 
   Calculator, 
@@ -16,6 +16,8 @@ import {
 import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart, Area } from 'recharts';
 
 const FinancingDashboard: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   // Mock data for charts
   const bureauData = [
     { name: 'Montage Financier', value: 45, color: '#F97316' },
@@ -47,22 +49,22 @@ const FinancingDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fadeIn">
       {/* Department Header */}
-      <div className="bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 rounded-3xl p-8 text-white shadow-2xl">
+      <div className="bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 rounded-3xl p-6 lg:p-8 text-white shadow-2xl transform hover:scale-[1.02] transition-all duration-300">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 lg:space-x-4">
             <div className="w-16 h-16 bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
               <CreditCard className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold mb-2">Financement Foncier et Immobilier</h1>
-              <p className="text-orange-100 text-lg">Solutions financières et partenariats stratégiques</p>
+              <h1 className="text-2xl lg:text-3xl font-bold mb-2">Financement Foncier et Immobilier</h1>
+              <p className="text-orange-100 text-base lg:text-lg">Solutions financières et partenariats stratégiques</p>
             </div>
           </div>
           <div className="text-right">
-            <div className="text-4xl font-bold">4.6M€</div>
-            <div className="text-orange-200">Volume total</div>
+            <div className="text-3xl lg:text-4xl font-bold">4.6M€</div>
+            <div className="text-orange-200 text-sm lg:text-base">Volume total</div>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Building, 
   Shield, 
@@ -16,6 +16,8 @@ import {
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line } from 'recharts';
 
 const SalesManagementDashboard: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   // Mock data for charts
   const bureauData = [
     { name: 'Suivi Juridique', value: 35, color: '#6B7280' },
@@ -47,22 +49,22 @@ const SalesManagementDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fadeIn">
       {/* Department Header */}
-      <div className="bg-gradient-to-br from-gray-600 via-gray-700 to-gray-800 rounded-3xl p-8 text-white shadow-2xl">
+      <div className="bg-gradient-to-br from-gray-600 via-gray-700 to-gray-800 rounded-3xl p-6 lg:p-8 text-white shadow-2xl transform hover:scale-[1.02] transition-all duration-300">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 lg:space-x-4">
             <div className="w-16 h-16 bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
               <Building className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold mb-2">Vente et Gestion Immobilière</h1>
-              <p className="text-gray-200 text-lg">Commercialisation et gestion du patrimoine immobilier</p>
+              <h1 className="text-2xl lg:text-3xl font-bold mb-2">Vente et Gestion Immobilière</h1>
+              <p className="text-gray-200 text-base lg:text-lg">Commercialisation et gestion du patrimoine immobilier</p>
             </div>
           </div>
           <div className="text-right">
-            <div className="text-4xl font-bold">950K€</div>
-            <div className="text-gray-300">CA mensuel</div>
+            <div className="text-3xl lg:text-4xl font-bold">950K€</div>
+            <div className="text-gray-300 text-sm lg:text-base">CA mensuel</div>
           </div>
         </div>
       </div>

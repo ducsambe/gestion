@@ -86,7 +86,7 @@ function App() {
               </h1>
               
               <p className="text-xl lg:text-2xl text-blue-100 font-light leading-relaxed">
-                Système de gestion des départements
+                {language === 'en' ? 'Department Management System' : 'Système de gestion des départements'}
               </p>
               
               <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto lg:mx-0"></div>
@@ -95,7 +95,9 @@ function App() {
             {/* Company Description */}
             <div className="space-y-6 text-blue-100">
               <p className="text-lg leading-relaxed">
-                Plateforme intégrée pour la gestion efficace de vos départements immobiliers et fonciers.
+                {language === 'en' 
+                  ? 'Integrated platform for efficient management of your real estate and land departments.' 
+                  : 'Plateforme intégrée pour la gestion efficace de vos départements immobiliers et fonciers.'}
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
@@ -103,31 +105,23 @@ function App() {
                   <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mb-2 mx-auto">
                     <Building2 className="w-4 h-4 text-white" />
                   </div>
-                  <p className="font-semibold">Gestion Foncière</p>
+                  <p className="font-semibold">{language === 'en' ? 'Land Management' : 'Gestion Foncière'}</p>
                 </div>
                 
                 <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
                   <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mb-2 mx-auto">
                     <Building2 className="w-4 h-4 text-white" />
                   </div>
-                  <p className="font-semibold">Financement</p>
+                  <p className="font-semibold">{language === 'en' ? 'Financing' : 'Financement'}</p>
                 </div>
                 
                 <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
                   <div className="w-8 h-8 bg-gray-500 rounded-lg flex items-center justify-center mb-2 mx-auto">
                     <Building2 className="w-4 h-4 text-white" />
                   </div>
-                  <p className="font-semibold">Vente & Gestion</p>
+                  <p className="font-semibold">{language === 'en' ? 'Sales & Management' : 'Vente & Gestion'}</p>
                 </div>
               </div>
-            </div>
-            
-            {/* Language Switcher */}
-            <div className="flex justify-center lg:justify-start">
-              <LanguageSwitcher
-                language={language}
-                onLanguageChange={setLanguage}
-              />
             </div>
           </div>
 
@@ -151,7 +145,7 @@ function App() {
                       {t('welcome')}
                     </h2>
                     <p className="text-blue-100 text-lg">
-                      {t('login')} - GeoCasa Group
+                      {language === 'en' ? 'Login - GeoCasa Group' : 'Connexion - GeoCasa Group'}
                     </p>
                     <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto mt-3"></div>
                   </div>
@@ -167,7 +161,9 @@ function App() {
                   <div className="mt-6 text-center">
                     <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span className="text-xs text-white font-medium">Connexion sécurisée</span>
+                      <span className="text-xs text-white font-medium">
+                        {language === 'en' ? 'Secure Connection' : 'Connexion sécurisée'}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -177,10 +173,15 @@ function App() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-blue-100 text-sm lg:absolute lg:bottom-8 lg:left-1/2 lg:transform lg:-translate-x-1/2">
-          <p>{COMPANY_INFO.location}</p>
-          <p>{COMPANY_INFO.phone} • {COMPANY_INFO.email}</p>
-        </div>
+        {/* <div className="text-center mt-8 text-blue-100 text-sm lg:absolute lg:bottom-8 lg:left-1/2 lg:transform lg:-translate-x-1/2">
+          <p>{language === 'en' ? 'Yaoundé, Cameroon' : COMPANY_INFO.location}</p>
+          <p>
+            {language === 'en' ? 'Business Hours: 08:00 - 18:00' : 'Heures d\'ouverture: 08:00 - 18:00'} • {COMPANY_INFO.phone} • {COMPANY_INFO.email}
+          </p>
+          <p className="mt-2 text-xs">
+            {language === 'en' ? '24/7 Customer Support' : 'Support Client 24/7'}
+          </p>
+        </div> */}
       </div>
     </div>
   );

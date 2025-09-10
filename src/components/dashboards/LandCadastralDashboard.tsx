@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   MapPin, 
   Scale, 
@@ -14,6 +14,8 @@ import {
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const LandCadastralDashboard: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   // Mock data for charts
   const bureauData = [
     { name: 'Études Juridiques', value: 35, color: '#3B82F6' },
@@ -36,22 +38,22 @@ const LandCadastralDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fadeIn">
       {/* Department Header */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 rounded-3xl p-8 text-white shadow-2xl">
+      <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 rounded-3xl p-6 lg:p-8 text-white shadow-2xl transform hover:scale-[1.02] transition-all duration-300">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 lg:space-x-4">
             <div className="w-16 h-16 bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
               <MapPin className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold mb-2">Gestion Foncière et Cadastrale</h1>
-              <p className="text-blue-100 text-lg">Expertise juridique et technique foncière</p>
+              <h1 className="text-2xl lg:text-3xl font-bold mb-2">Gestion Foncière et Cadastrale</h1>
+              <p className="text-blue-100 text-base lg:text-lg">Expertise juridique et technique foncière</p>
             </div>
           </div>
           <div className="text-right">
-            <div className="text-4xl font-bold">191</div>
-            <div className="text-blue-200">Dossiers totaux</div>
+            <div className="text-3xl lg:text-4xl font-bold">191</div>
+            <div className="text-blue-200 text-sm lg:text-base">Dossiers totaux</div>
           </div>
         </div>
       </div>
