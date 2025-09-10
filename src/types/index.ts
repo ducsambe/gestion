@@ -15,6 +15,26 @@ export interface Department {
   icon: string;
 }
 
+export interface Bureau {
+  id: string;
+  name: string;
+  nameEn: string;
+  nameFr: string;
+  color: string;
+  icon: string;
+}
+
+export interface DocumentFlow {
+  id: string;
+  clientName: string;
+  requestType: string;
+  currentBureau: string;
+  status: 'pending' | 'in-progress' | 'completed' | 'on-hold';
+  createdAt: Date;
+  updatedAt: Date;
+  progress: number;
+}
+
 export interface LoginCredentials {
   email: string;
   password: string;

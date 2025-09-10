@@ -66,14 +66,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, loading, t }) => {
       </form>
 
       {/* Demo credentials hint */}
-      <div className="mt-8 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+      {/* <div className="mt-8 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
         <p className="text-sm text-blue-200 font-semibold mb-3 text-center">Comptes de démonstration:</p>
         <div className="text-xs text-blue-100 space-y-2">
           <p>jean@geocasagroup.com / password (2 depts)</p>
           <p>marie@geocasagroup.com / password (1 dept)</p>
           <p>paul@geocasagroup.com / password (all depts)</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
