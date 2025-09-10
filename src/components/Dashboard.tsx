@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, Bell, Search } from 'lucide-react';
+import { Menu, Bell, Search, X } from 'lucide-react';
 import { User as UserType, Department, DocumentFlow } from '../types';
 import Header from './Header';
+import Sidebar from './Sidebar';
+import ClientRegistration from './secretary/ClientRegistration';
+import DocumentRouting from './secretary/DocumentRouting';
+import DocumentTracking from './secretary/DocumentTracking';
+import MyDocuments from './secretary/MyDocuments';
 import LandCadastralDashboard from './dashboards/LandCadastralDashboard';
 import FinancinDashboard from './dashboards/FinancingDashboard';
 import SalesManagementDashboard from './dashboards/SalesManagementDashboard';
@@ -22,7 +27,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   language 
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeSection, setActiveSection] = useState('dashboard');
   const [notifications] = useState(3); // Mock notification count
 
   // Mock document flow data
@@ -59,16 +64,37 @@ const Dashboard: React.FC<DashboardProps> = ({
     }
   ]);
 
-  const renderDepartmentDashboard = () => {
-    switch (department.id) {
-      case 'land-cadastral':
-        return <LandCadastralDashboard />;
-      case 'financing':
-        return <FinancingDashboard />;
-      case 'sales-management':
-        return <SalesManagementDashboard />;
+  const renderContent = () => {
+    // Secretary sections (only for land-cadastral department)
+    if (department.id === 'land-cadastral') {
+      switch (activeSection) {
+        case 'client-registration':
+          return <ClientRegistration />;
+        case 'document-routing':
+          return <DocumentRouting />;
+        case 'document-tracking':
+          return <DocumentTracking />;
+        case 'my-documents':
+          return <MyDocuments />;
+      }
+    }
+    
+    // Common sections
+    switch (activeSection) {
+      case 'dashboard':
+      case 'overview':
+        switch (department.id) {
+          case 'land-cadastral':
+            return <LandCadastralDashboard />;
+          case 'financing':
+            return <FinancingDashboard />;
+          case 'sales-management':
+            return <SalesManagementDashboard />;
+          default:
+            return <LandCadastralDashboard />;
+        }
       default:
-        return <LandCadastralDashboard />;
+        return <div className="p-6 text-center text-gray-500">Section en développement...</div>;
     }
   };
 
@@ -111,27 +137,31 @@ const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
       
-      <div className="flex min-h-screen">
+      <div className="flex">
+        {/* Sidebar */}
+        <Sidebar
+          user={user}
+          department={department}
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+          isOpen={sidebarOpen}
+          onToggle={() => setSidebarOpen(!sidebarOpen)}
+        />
+        
         {/* Main Content */}
-        <main className="flex-1 p-4 sm:p-6 max-w-7xl mx-auto">
-          {renderDepartmentDashboard()}
+        <main className="flex-1 lg:ml-0 min-h-screen bg-gray-50">
+          <div className="p-4 sm:p-6">
+            {renderContent()}
+          </div>
         </main>
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="md:hidden fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
+          className="lg:hidden fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
         >
-          <Menu className="w-6 h-6" />
+          {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
-
-        {/* Mobile sidebar overlay */}
-        {sidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
       </div>
     </div>
   );
