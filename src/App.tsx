@@ -124,12 +124,7 @@ function App() {
                 <span className="text-gray-200 text-4xl lg:text-5xl">Group</span>
               </h1>
               
-              {/* Nos Services */}
-              <div className="mb-6">
-                <h2 className="text-2xl lg:text-3xl font-semibold text-blue-100 mb-4">
-                  {language === 'en' ? 'Our Services' : 'Nos Services'}
-                </h2>
-              </div>
+             
               
               <p className="text-xl lg:text-2xl text-blue-100 font-light leading-relaxed">
                 {language === 'en' ? 'Department Management System' : 'Système de gestion des départements'}
@@ -145,7 +140,12 @@ function App() {
                   ? 'Integrated platform for efficient management of your real estate and land departments.' 
                   : 'Plateforme intégrée pour la gestion efficace de vos départements immobiliers et fonciers.'}
               </p>
-              
+               {/* Nos Services */}
+              <div className="mb-6">
+                <h2 className="text-2xl lg:text-3xl font-semibold text-blue-100 mb-4">
+                  {language === 'en' ? 'Our Services' : 'Nos Services'}
+                </h2>
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                 <div 
                   onClick={() => setShowDepartmentDetail('land-cadastral')}
