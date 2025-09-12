@@ -25,6 +25,7 @@ interface UnifiedSelectorProps {
   onSelectDivision: (division: Division) => void;
   onShowDepartmentDetail: (departmentId: string) => void;
   onShowDivisionDetail: (divisionId: string) => void;
+  onLogout: () => void;
   t: (key: string) => string;
   language: string;
   setLanguage: (lang: string) => void;
@@ -38,6 +39,7 @@ const UnifiedSelector: React.FC<UnifiedSelectorProps> = ({
   onSelectDivision,
   onShowDepartmentDetail,
   onShowDivisionDetail,
+  onLogout,
   t,
   language,
   setLanguage
@@ -61,9 +63,19 @@ const UnifiedSelector: React.FC<UnifiedSelectorProps> = ({
     <div className="min-h-screen relative">
       <AnimatedBackground />
       
-      {/* Language Switcher - Top Right */}
+      {/* Language Switcher and Logout - Top Right */}
       <div className="absolute top-6 right-6 z-20">
-        <LanguageSwitcher language={language as any} onLanguageChange={setLanguage as any} />
+        <div className="flex items-center space-x-4">
+          <LanguageSwitcher language={language as any} onLanguageChange={setLanguage as any} />
+          <button
+            onClick={onLogout}
+            className="flex items-center space-x-2 bg-red-500/20 backdrop-blur-sm text-white px-4 py-3 rounded-2xl border border-red-400/30 hover:bg-red-500/30 transition-all duration-300"
+          >
+            <span className="text-sm font-medium">
+              {language === 'en' ? 'Logout' : 'Déconnexion'}
+            </span>
+          </button>
+        </div>
       </div>
 
       <div className="relative z-10 min-h-screen p-6">

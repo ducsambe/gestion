@@ -21,6 +21,11 @@ function App() {
     await login(credentials);
   };
 
+  const handleDepartmentSelect = (department: Department) => {
+    selectDepartment(department);
+    // Navigate to dashboard after selecting department
+  };
+
   // Show department detail if requested
   if (showDepartmentDetail) {
     return (
@@ -71,10 +76,11 @@ function App() {
         user={user}
         departments={user.departments}
         divisions={user.divisions}
-        onSelectDepartment={selectDepartment}
+        onSelectDepartment={handleDepartmentSelect}
         onSelectDivision={selectDivision}
         onShowDepartmentDetail={setShowDepartmentDetail}
         onShowDivisionDetail={setShowDivisionDetail}
+        onLogout={logout}
         t={t}
         language={language}
         setLanguage={setLanguage}
