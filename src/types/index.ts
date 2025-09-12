@@ -3,7 +3,9 @@ export interface User {
   name: string;
   email: string;
   departments: Department[];
+  divisions: Division[];
   currentDepartment?: Department;
+  currentDivision?: Division;
 }
 
 export interface Department {
@@ -13,6 +15,10 @@ export interface Department {
   nameFr: string;
   color: string;
   icon: string;
+  description: string;
+  descriptionEn: string;
+  services: string[];
+  image: string;
 }
 
 export interface Bureau {
@@ -22,6 +28,30 @@ export interface Bureau {
   nameFr: string;
   color: string;
   icon: string;
+}
+
+export interface Division {
+  id: string;
+  name: string;
+  nameEn: string;
+  nameFr: string;
+  description: string;
+  descriptionEn: string;
+  image: string;
+  color: string;
+  offices: Office[];
+}
+
+export interface Office {
+  id: string;
+  name: string;
+  nameEn: string;
+  nameFr: string;
+  description: string;
+  descriptionEn: string;
+  image: string;
+  color: string;
+  divisionId: string;
 }
 
 export interface DocumentFlow {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, Bell, Search, X } from 'lucide-react';
-import { User as UserType, Department, DocumentFlow } from '../types';
+import { User as UserType, Department, Division, DocumentFlow } from '../types';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import ClientRegistration from './secretary/ClientRegistration';
@@ -14,6 +14,7 @@ import SalesManagementDashboard from './dashboards/SalesManagementDashboard';
 interface DashboardProps {
   user: UserType;
   department: Department;
+  division: Division;
   onLogout: () => void;
   t: (key: string) => string;
   language: string;
@@ -22,6 +23,7 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ 
   user, 
   department, 
+  division,
   onLogout, 
   t, 
   language 
@@ -108,7 +110,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
               <h2 className="text-lg font-semibold text-gray-900">
-                Tableau de bord - {department.nameFr}
+                Tableau de bord - {department.nameFr} | {division.nameFr}
               </h2>
             </div>
             
@@ -142,6 +144,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         <Sidebar
           user={user}
           department={department}
+          division={division}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
           isOpen={sidebarOpen}

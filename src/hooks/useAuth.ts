@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { User, LoginCredentials, Department } from '../types';
-import { DEPARTMENTS } from '../constants';
+import { User, LoginCredentials, Department, Division } from '../types';
+import { DEPARTMENTS, DIVISIONS } from '../constants';
 
 // Mock user data - replace with actual API calls
 const MOCK_USERS: User[] = [
@@ -8,19 +8,22 @@ const MOCK_USERS: User[] = [
     id: '1',
     name: 'Jean Dupont',
     email: 'jean@geocasagroup.com',
-    departments: [DEPARTMENTS[0], DEPARTMENTS[1]] // Multiple departments
+    departments: [DEPARTMENTS[0], DEPARTMENTS[1]], // Multiple departments
+    divisions: [DIVISIONS[0], DIVISIONS[1]] // Multiple divisions
   },
   {
     id: '2',
     name: 'Marie Nguema',
     email: 'marie@geocasagroup.com',
-    departments: [DEPARTMENTS[2]] // Single department
+    departments: [DEPARTMENTS[2]], // Single department
+    divisions: [DIVISIONS[2]] // Single division
   },
   {
     id: '3',
     name: 'Paul Mballa',
     email: 'paul@geocasagroup.com',
-    departments: DEPARTMENTS // All departments
+    departments: DEPARTMENTS, // All departments
+    divisions: DIVISIONS // All divisions
   }
 ];
 
@@ -52,6 +55,12 @@ export const useAuth = () => {
     }
   };
 
+  const selectDivision = (division: Division) => {
+    if (user) {
+      setUser({ ...user, currentDivision: division });
+    }
+  };
+
   const logout = () => {
     setUser(null);
   };
@@ -61,6 +70,7 @@ export const useAuth = () => {
     loading,
     login,
     selectDepartment,
+    selectDivision,
     logout
   };
 };

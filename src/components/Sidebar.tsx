@@ -14,11 +14,12 @@ import {
   CheckCircle,
   AlertTriangle
 } from 'lucide-react';
-import { Department, User } from '../types';
+import { Department, Division, User } from '../types';
 
 interface SidebarProps {
   user: User;
   department: Department;
+  division: Division;
   activeSection: string;
   onSectionChange: (section: string) => void;
   isOpen: boolean;
@@ -28,6 +29,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ 
   user, 
   department, 
+  division,
   activeSection, 
   onSectionChange, 
   isOpen, 
@@ -113,6 +115,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               <div>
                 <h2 className="font-bold text-gray-900 text-lg">Navigation</h2>
                 <p className="text-sm text-gray-600">{department.nameFr}</p>
+                <p className="text-xs text-gray-500">{division.nameFr}</p>
               </div>
             </div>
           </div>

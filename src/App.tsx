@@ -5,24 +5,58 @@ import { useLanguage } from './hooks/useLanguage';
 import AnimatedBackground from './components/AnimatedBackground';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import LoginForm from './components/LoginForm';
-import DepartmentSelector from './components/DepartmentSelector';
+import UnifiedSelector from './components/UnifiedSelector';
+import DivisionDetail from './components/DivisionDetail';
+import DepartmentDetail from './components/DepartmentDetail';
 import Dashboard from './components/Dashboard';
 import { COMPANY_INFO } from './constants';
 
 function App() {
-  const { user, loading, login, selectDepartment, logout } = useAuth();
+  const { user, loading, login, selectDepartment, selectDivision, logout } = useAuth();
   const { language, setLanguage, t } = useLanguage();
+  const [showDepartmentDetail, setShowDepartmentDetail] = React.useState<string | null>(null);
+  const [showDivisionDetail, setShowDivisionDetail] = React.useState<string | null>(null);
 
   const handleLogin = async (credentials: any) => {
     await login(credentials);
   };
 
+  // Show department detail if requested
+  if (showDepartmentDetail) {
+    return (
+      <DepartmentDetail
+        departmentId={showDepartmentDetail}
+        onBack={() => setShowDepartmentDetail(null)}
+        language={language}
+        setLanguage={setLanguage}
+      />
+    );
+  }
+
+  // Show division detail if requested
+  if (showDivisionDetail) {
+    return (
+      <DivisionDetail
+        divisionId={showDivisionDetail}
+        user={user!}
+        onBack={() => setShowDivisionDetail(null)}
+        onSelectOffice={(officeId) => {
+          // Here you would navigate to the office dashboard
+          console.log('Selected office:', officeId);
+        }}
+        language={language}
+        setLanguage={setLanguage}
+      />
+    );
+  }
+
   // Show dashboard if user is logged in and has selected a department
-  if (user && user.currentDepartment) {
+  if (user && user.currentDepartment && user.currentDivision) {
     return (
       <Dashboard
         user={user}
         department={user.currentDepartment}
+        division={user.currentDivision}
         onLogout={logout}
         t={t}
         language={language}
@@ -30,28 +64,33 @@ function App() {
     );
   }
 
-  // Show department selector if user is logged in but hasn't selected a department
-  if (user && user.departments.length > 1) {
+  // Show unified selector if user is logged in but hasn't selected department/division
+  if (user) {
     return (
-      <DepartmentSelector
+      <UnifiedSelector
+        user={user}
         departments={user.departments}
-        onSelect={selectDepartment}
+        divisions={user.divisions}
+        onSelectDepartment={selectDepartment}
+        onSelectDivision={selectDivision}
+        onShowDepartmentDetail={setShowDepartmentDetail}
+        onShowDivisionDetail={setShowDivisionDetail}
         t={t}
         language={language}
+        setLanguage={setLanguage}
       />
     );
-  }
-
-  // Auto-select department if user has only one
-  if (user && user.departments.length === 1 && !user.currentDepartment) {
-    selectDepartment(user.departments[0]);
-    return null;
   }
 
   // Show login page
   return (
     <div className="min-h-screen relative flex items-center justify-center p-4">
       <AnimatedBackground />
+      
+      {/* Language Switcher - Top Right */}
+      <div className="absolute top-6 right-6 z-20">
+        <LanguageSwitcher language={language} onLanguageChange={setLanguage} />
+      </div>
       
       <div className="relative z-10 w-full max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-screen py-8">
@@ -85,6 +124,13 @@ function App() {
                 <span className="text-gray-200 text-4xl lg:text-5xl">Group</span>
               </h1>
               
+              {/* Nos Services */}
+              <div className="mb-6">
+                <h2 className="text-2xl lg:text-3xl font-semibold text-blue-100 mb-4">
+                  {language === 'en' ? 'Our Services' : 'Nos Services'}
+                </h2>
+              </div>
+              
               <p className="text-xl lg:text-2xl text-blue-100 font-light leading-relaxed">
                 {language === 'en' ? 'Department Management System' : 'Système de gestion des départements'}
               </p>
@@ -101,21 +147,30 @@ function App() {
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                <div 
+                  onClick={() => setShowDepartmentDetail('land-cadastral')}
+                  className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20 cursor-pointer hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105"
+                >
                   <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mb-2 mx-auto">
                     <Building2 className="w-4 h-4 text-white" />
                   </div>
                   <p className="font-semibold">{language === 'en' ? 'Land Management' : 'Gestion Foncière'}</p>
                 </div>
                 
-                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                <div 
+                  onClick={() => setShowDepartmentDetail('financing')}
+                  className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20 cursor-pointer hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105"
+                >
                   <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mb-2 mx-auto">
                     <Building2 className="w-4 h-4 text-white" />
                   </div>
                   <p className="font-semibold">{language === 'en' ? 'Financing' : 'Financement'}</p>
                 </div>
                 
-                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                <div 
+                  onClick={() => setShowDepartmentDetail('sales-management')}
+                  className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20 cursor-pointer hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105"
+                >
                   <div className="w-8 h-8 bg-gray-500 rounded-lg flex items-center justify-center mb-2 mx-auto">
                     <Building2 className="w-4 h-4 text-white" />
                   </div>
